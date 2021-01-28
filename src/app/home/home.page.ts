@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-home',
@@ -6,19 +7,19 @@ import {Component} from '@angular/core';
     styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-     aniversario: Date;
-     idadeDias: number;
-     idadeHoras: number;
-     idadeMinutos: number;
-     diaProximoAniversario: number;
-     diaSemanaAniversario: string;
+    aniversario: Date;
+    idadeDias: number;
+    idadeHoras: number;
+    idadeMinutos: number;
+    diaProximoAniversario: number;
+    diaSemanaAniversario: string;
 
     constructor() {
     }
 
     getDate(): string | Date {
         const date = new Date();
-        let max = date.toLocaleString('default', {year: 'numeric', month: 'numeric', day: 'numeric'});
+        let max = date.toLocaleString('default', { year: 'numeric', month: 'numeric', day: 'numeric' });
         max = max.split('/')[2] + '-' + max.split('/')[1] + '-' + max.split('/')[0];
         return max;
     }
@@ -29,17 +30,17 @@ export class HomePage {
             this.idadeDias = parseInt(String((Number(currentDate) - Number(new Date(this.aniversario))) / (24 * 3600 * 1000)));
             this.idadeHoras = this.idadeDias * 24;
             this.idadeMinutos = this.idadeHoras * 60;
-            const anoNasc = new Date(this.aniversario).getFullYear();
+            const anoNascimento = new Date(this.aniversario).getFullYear();
             const anoAtual = (currentDate.getFullYear());
             let bissexto = 0;
-            for (let i = 0; i < anoAtual - anoNasc; i++) {
-                if ((anoNasc + i) % 4 === 0) {
+            for (let i = 0; i < anoAtual - anoNascimento; i++) {
+                if ((anoNascimento + i) % 4 === 0) {
                     bissexto += 1;
                 }
             }
             if ((365 - (this.idadeDias % 365)) === 0) {
                 this.diaProximoAniversario = 0;
-            } else if (anoNasc % 4 === 0) {
+            } else if (anoNascimento % 4 === 0) {
                 this.diaProximoAniversario = 365 - (this.idadeDias % 365) + bissexto - 1;
             } else if (bissexto > 0) {
                 this.diaProximoAniversario = 365 - (this.idadeDias % 365) + bissexto;
@@ -48,14 +49,17 @@ export class HomePage {
             }
             if (new Date(this.aniversario).getMonth() > currentDate.getMonth()) {
                 this.diaSemanaAniversario = this.weekDay(new Date(currentDate.getFullYear(), new Date(this.aniversario).getMonth(), new Date(this.aniversario).getDate()).getDay());
-                console.log('aqui');
+
             } else if (new Date(this.aniversario).getMonth() === currentDate.getMonth() &&
-                new Date(this.aniversario).getDate() >= currentDate.getDate()) {
+                new Date(this.aniversario).getDate() <= currentDate.getDate()) {
                 this.diaSemanaAniversario = this.weekDay(new Date(currentDate.getFullYear() + 1,
-                    new Date(this.aniversario).getMonth()).getDay());
+                    currentDate.getMonth(), new Date(this.aniversario).getDate()).getDay());
+
+            } else if (new Date(this.aniversario).getMonth() === currentDate.getMonth() &&
+                new Date(this.aniversario).getDate() > currentDate.getDate()) {
+                this.diaSemanaAniversario = this.weekDay(new Date(currentDate.getFullYear(),
+                    new Date(this.aniversario).getMonth(), new Date(this.aniversario).getDate()).getDay());
             }
-            console.log('Anos bissexto: ', bissexto);
-            console.log(365 - (this.idadeDias % 365));
         } else {
             alert('Insira uma data!');
         }
