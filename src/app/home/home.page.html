@@ -1,20 +1,60 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+  <ion-toolbar color="medium">
+      <ion-title>
+          Calculadora de Idade
+      </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <ion-grid>
+          <ion-row>
+              <ion-col>
+                  <ion-label>Data de Nascimento</ion-label>
+                  <ion-datetime id="display" display-timezone="utc" display-format="DD/MM/YYYY" max="{{getDate()}}"
+                                doneText="Confimar" cancelText="Cancelar" [(ngModel)]="aniversario" required></ion-datetime>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                  <ion-button color="medium" expand="block" (click)="calcular()">Calcular</ion-button>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                  <ion-label>Sua idade em:</ion-label>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                  <ion-label>Dias:</ion-label>
+                  <ion-input type="number" id="display" value="0" [(ngModel)]="idadeDias" readonly></ion-input>
+              </ion-col>
+              <ion-col>
+                  <ion-label>Horas:</ion-label>
+                  <ion-input type="number" id="display" value="0" [(ngModel)]="idadeHoras" readonly></ion-input>
+              </ion-col>
+              <ion-col>
+                  <ion-label>Minutos:</ion-label>
+                  <ion-input type="number" id="display" value="0" [(ngModel)]="idadeMinutos" readonly></ion-input>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                  <ion-label>Próximo aniversário é daqui:</ion-label>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                  <ion-label>Dias:</ion-label>
+                  <ion-input type="text" id="display" readonly [(ngModel)]="diaProximoAniversario"></ion-input>
+              </ion-col>
+              <ion-col>
+                  <ion-label>Dia da semana:</ion-label>
+                  <ion-input type="text" id="display" readonly [(ngModel)]="diaSemanaAniversario"></ion-input>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
   </div>
 </ion-content>
